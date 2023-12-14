@@ -21,7 +21,6 @@ pipeline {
             }
         }
         
-
         stage('Build') {
             script {
                     if (env.GIT_BRANCH == "origin/main") {
@@ -39,6 +38,7 @@ pipeline {
                         echo "Branch not recognised"
                         '''
                     }
+            }
             }
         }
 
@@ -101,6 +101,3 @@ pipeline {
             }
         }
     }
-
-   
-}
