@@ -66,9 +66,11 @@ spec:
 
       containers:
 
-      - name: flask-container
+     - name: flask-container
 
         image: heelsie/duo-deploy-flask:latest
+        
+        imagePullPolicy: Always
 
         ports:
 
