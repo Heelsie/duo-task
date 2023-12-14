@@ -68,7 +68,7 @@ spec:
 
       - name: nginx-container
 
-        image: heelsie/flask-nginx:latest
+        image: heelsie/flask-nginx:v2
 
         imagePullPolicy: Always
 
