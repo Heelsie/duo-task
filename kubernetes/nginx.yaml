@@ -70,6 +70,8 @@ spec:
 
         image: heelsie/flask-nginx:latest
 
+        imagePullPolicy: Always
+
         ports:
 
         - containerPort: 80
