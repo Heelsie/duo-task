@@ -51,7 +51,7 @@ pipeline {
                 docker push heelsie/flask-nginx:latest
                 docker push heelsie/flask-nginx:prod-v${BUILD_NUMBER}
                 '''
-            }
+            
             } else if (env.GIT_BRANCH == "origin/dev") {
                 sh '''
                 docker push heelsie/duo-deploy-flask:latest
@@ -64,6 +64,7 @@ pipeline {
                         echo "Branch not recognised"
                         '''
                     }
+        }
         }
         }
 
