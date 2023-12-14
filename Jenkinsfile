@@ -27,7 +27,7 @@ pipeline {
                     if (env.GIT_BRANCH == "origin/master") {
                         sh '''
                         docker build -t heelsie/duo-deploy-flask:latest -t heelsie/duo-deploy-flask:prod-v${BUILD_NUMBER} .
-                        docker build -t heelsie/flask-nginx:latest -t heelsie/flask-nginx:dev-v${BUILD_NUMBER} .
+                        docker build -t heelsie/flask-nginx:latest -t heelsie/flask-nginx:prod-v${BUILD_NUMBER} .
                         '''
                     } else if (env.GIT_BRANCH == "origin/dev") {
                         sh '''
