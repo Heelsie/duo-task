@@ -25,7 +25,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh '''
-                kubectl apply -f ./kubernetes
+                kubectl apply -f .
                 kubectl set image deployment/flask-deployment task1=heelsie/duo-deploy-flask:v${BUILD_NUMBER}
                 kubectl set image deployment/nginx-deployment task1=heelsie/flask-nginx:v${BUILD_NUMBER}
                 '''
