@@ -5,8 +5,8 @@ pipeline {
         stage('Build') {
             steps {
                 sh '''
-                docker build -t heelsie/flask-jenk:latest -t heelsie/duo-deploy-flask:v${BUILD_NUMBER} .
-                docker build -t heelsie/flask-jenk:latest -t heelsie/flask-nginx:v${BUILD_NUMBER} .
+                docker build -t heelsie/duo-deploy-flask:latest -t heelsie/duo-deploy-flask:v${BUILD_NUMBER} .
+                docker build -t heelsie/flask-nginx:latest -t heelsie/flask-nginx:v${BUILD_NUMBER} .
                 '''
             }
         }
