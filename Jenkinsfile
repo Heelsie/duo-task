@@ -75,13 +75,13 @@ pipeline {
                     script {
                         if (env.GIT_BRANCH == "origin/master") {
                     sh '''
-                    kubectl apply -f ./kubernetes
+                    kubectl apply -n prod -f ./kubernetes
                     kubectl set image deployment/flask-deployment flask-container=heelsie/duo-deploy-flask:v${BUILD_NUMBER}
                     kubectl set image deployment/nginx-deployment nginx-container=heelsie/flask-nginx:prod-v${BUILD_NUMBER}
                     '''
                     } else if (env.GIT_BRANCH == "origin/dev") {
                         sh '''
-                    kubectl apply -f ./kubernetes
+                    kubectl apply -n dev -f ./kubernetes
                     kubectl set image deployment/flask-deployment flask-container=heelsie/duo-deploy-flask:v${BUILD_NUMBER}
                     kubectl set image deployment/nginx-deployment nginx-container=heelsie/flask-nginx:dev-v${BUILD_NUMBER}
                     '''
