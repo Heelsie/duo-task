@@ -21,24 +21,25 @@ pipeline {
             }
         }
         
-        stage('Build') {
-            script {
-                    if (env.GIT_BRANCH == "origin/main") {
+         stage('Build') {
+            steps {
+                script {
+                    if (env.GIT_BRANCH == "origin/master") {
                         sh '''
                         docker build -t heelsie/duo-deploy-flask:latest -t heelsie/duo-deploy-flask:prod-v${BUILD_NUMBER} .
                         docker build -t heelsie/flask-nginx:latest -t heelsie/flask-nginx:dev-v${BUILD_NUMBER} .
                         '''
-                } else if (env.GIT_BRANCH == "origin/dev") {
+                    } else if (env.GIT_BRANCH == "origin/dev") {
                         sh '''
                         docker build -t heelsie/duo-deploy-flask:latest -t heelsie/duo-deploy-flask:dev-v${BUILD_NUMBER} .
                         docker build -t heelsie/flask-nginx:latest -t heelsie/flask-nginx:dev-v${BUILD_NUMBER} .
                         '''
-                         } else {
+                    } else {
                         sh '''
                         echo "Branch not recognised"
                         '''
                     }
-            }
+                }
             }
         }
 
@@ -65,32 +66,32 @@ pipeline {
                         echo "Branch not recognised"
                         '''
                     }
-        }
-        }
+                }
+            }
         }
 
         stage('Deploy') {
             steps {
-                script {
-                    if (env.GIT_BRANCH == "origin/master") {
-                sh '''
-                kubectl apply -f ./kubernetes
-                kubectl set image deployment/flask-deployment flask-container=heelsie/duo-deploy-flask:v${BUILD_NUMBER}
-                kubectl set image deployment/nginx-deployment nginx-container=heelsie/flask-nginx:prod-v${BUILD_NUMBER}
-                '''
-                } else if (env.GIT_BRANCH == "origin/dev") {
+                    script {
+                        if (env.GIT_BRANCH == "origin/master") {
                     sh '''
-                kubectl apply -f ./kubernetes
-                kubectl set image deployment/flask-deployment flask-container=heelsie/duo-deploy-flask:v${BUILD_NUMBER}
-                kubectl set image deployment/nginx-deployment nginx-container=heelsie/flask-nginx:dev-v${BUILD_NUMBER}
-                '''
-                } else {
-                    sh '''
-                        echo "Branch not recognised"
-                        '''
+                    kubectl apply -f ./kubernetes
+                    kubectl set image deployment/flask-deployment flask-container=heelsie/duo-deploy-flask:v${BUILD_NUMBER}
+                    kubectl set image deployment/nginx-deployment nginx-container=heelsie/flask-nginx:prod-v${BUILD_NUMBER}
+                    '''
+                    } else if (env.GIT_BRANCH == "origin/dev") {
+                        sh '''
+                    kubectl apply -f ./kubernetes
+                    kubectl set image deployment/flask-deployment flask-container=heelsie/duo-deploy-flask:v${BUILD_NUMBER}
+                    kubectl set image deployment/nginx-deployment nginx-container=heelsie/flask-nginx:dev-v${BUILD_NUMBER}
+                    '''
+                    } else {
+                        sh '''
+                            echo "Branch not recognised"
+                            '''
+                    }
                 }
             }
-        }
         }
 
         stage('CleanUp') {
@@ -101,3 +102,4 @@ pipeline {
             }
         }
     }
+}
